@@ -24,13 +24,22 @@ const Signup = () => {
     if (!company) {
       err = { ...err, company: true };
     }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email) {
       err = { ...err, email: true };
+    } else if (!emailRegex.test(email)) {
+      err = { ...err, email: true, emailInvalid: true };
     }
+
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%])(?=.*\d)[A-Za-z\d@#$%]{8,}$/;
 
     if (!password) {
       err = { ...err, password: true };
+    } else if (!passwordRegex.test(password)) {
+      err = { ...err, password: true, passwordInvalid: true };
     }
+
     if (!captcha) {
       err = { ...err, captcha: true, captchaNotMatching: false };
     } else if (captcha.toLowerCase() !== generatedCaptcha) {
@@ -89,19 +98,28 @@ const Signup = () => {
   };
   const emailChange = (e) => {
     const val = e.target.value;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     if (!val) {
       setErrors({ ...errors, email: true });
+    } else if (!emailRegex.test(val)) {
+      setErrors({ ...errors, email: true, emailInvalid: true });
     } else {
-      setErrors({ ...errors, email: false });
+      setErrors({ ...errors, email: false, emailInvalid: false });
     }
     setEmail(val);
   };
   const passwordChange = (e) => {
     const val = e.target.value;
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%])(?=.*\d)[A-Za-z\d@#$%]{8,}$/;
+
     if (!val) {
       setErrors({ ...errors, password: true });
+    } else if (!passwordRegex.test(val)) {
+      setErrors({ ...errors, password: true, passwordInvalid: true });
     } else {
-      setErrors({ ...errors, password: false });
+      setErrors({ ...errors, password: false, passwordInvalid: false });
     }
     setPassword(val);
   };
@@ -185,7 +203,15 @@ const Signup = () => {
                   value={email}
                 />
                 {errors?.email && (
-                  <span className="text-danger">Please enter email </span>
+                  <span className="text-danger">
+                    Please enter email
+                    <br />
+                  </span>
+                )}
+                {errors?.emailInvalid && (
+                  <span className="text-danger">
+                    Please enter a valid email address
+                  </span>
                 )}
               </div>
               <div className="mt-2 form-group">
@@ -206,7 +232,17 @@ const Signup = () => {
                   value={password}
                 />
                 {errors?.password && (
-                  <span className="text-danger">Please enter password</span>
+                  <span className="text-danger">
+                    Please enter password
+                    <br />
+                  </span>
+                )}
+                {errors?.passwordInvalid && (
+                  <span className="text-danger">
+                    Password must contain at least 8 characters, including
+                    uppercase, lowercase, number, and special character (@, #,
+                    $, %).
+                  </span>
                 )}
               </div>
               <div className="mt-2 form-group">
@@ -241,7 +277,10 @@ const Signup = () => {
                   value={captcha}
                 />
                 {errors?.captcha && (
-                  <span className="text-danger">Please enter captcha</span>
+                  <span className="text-danger">
+                    Please enter captcha
+                    <br />
+                  </span>
                 )}
                 {errors?.captchaNotMatching && (
                   <span className="text-danger">

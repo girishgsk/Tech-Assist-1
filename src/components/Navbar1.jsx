@@ -12,7 +12,7 @@ const Navbar1 = () => {
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
-          <h2>Tech-Assist</h2>
+          <h2 className="navbar-brand">Tech-Assist</h2>
           <button
             className="navbar-toggler"
             type="button"
@@ -24,10 +24,12 @@ const Navbar1 = () => {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div className="collapse navbar-collapse" id="navbarText">
+          <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
               <li className="nav-item">
                 <button
+                  className="nav-link"
+                  aria-current="page"
                   style={{ background: "none", border: "none" }}
                   onClick={logout}
                 >
