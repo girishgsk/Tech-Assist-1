@@ -101,9 +101,9 @@ const Signup = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!val) {
-      setErrors({ ...errors, email: true });
+      setErrors({ ...errors, email: true, emailInvalid: false });
     } else if (!emailRegex.test(val)) {
-      setErrors({ ...errors, email: true, emailInvalid: true });
+      setErrors({ ...errors, email: false, emailInvalid: true });
     } else {
       setErrors({ ...errors, email: false, emailInvalid: false });
     }
@@ -115,9 +115,9 @@ const Signup = () => {
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%])(?=.*\d)[A-Za-z\d@#$%]{8,}$/;
 
     if (!val) {
-      setErrors({ ...errors, password: true });
+      setErrors({ ...errors, password: true, passwordInvalid: false });
     } else if (!passwordRegex.test(val)) {
-      setErrors({ ...errors, password: true, passwordInvalid: true });
+      setErrors({ ...errors, password: false, passwordInvalid: true });
     } else {
       setErrors({ ...errors, password: false, passwordInvalid: false });
     }
